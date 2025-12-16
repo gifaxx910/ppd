@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fincaff - Temukan Kedai Kopi Terdekat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #FFF8E3;
+            color: #5D4037;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: #FFF8E3;
+            padding: 20px 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(17, 117, 124, 0.08);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #11757C;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #5D4037;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #11757C;
+        }
+
+        .download-btn {
+            background: #11757C;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(17, 117, 124, 0.3);
+        }
+
+        .download-btn:hover {
+            background: #0d5c61;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(17, 117, 124, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 5% 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 52px;
+            line-height: 1.2;
+            color: #11757C;
+            margin-bottom: 24px;
+            font-weight: 700;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            line-height: 1.6;
+            color: #5D4037;
+            margin-bottom: 40px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #11757C;
+            color: white;
+            padding: 16px 36px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(17, 117, 124, 0.35);
+        }
+
+        .btn-primary:hover {
+            background: #0d5c61;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(17, 117, 124, 0.45);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #11757C;
+            padding: 16px 36px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid #11757C;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #11757C;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .hero-image {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .phone-mockup {
+            width: 100%;
+            max-width: 450px;
+            height: auto;
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(17, 117, 124, 0.2);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 5%;
+            background: linear-gradient(180deg, #FFF8E3 0%, #FDB462 100%);
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 42px;
+            color: #11757C;
+            margin-bottom: 60px;
+            font-weight: 700;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: #FFF8E3;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 8px 30px rgba(17, 117, 124, 0.12);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 45px rgba(17, 117, 124, 0.18);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #11757C 0%, #0d5c61 100%);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 24px;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            color: #11757C;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #5D4037;
+        }
+
+        /* Screenshots Section */
+        .screenshots {
+            padding: 80px 5%;
+            background: #FFF8E3;
+        }
+
+        .screenshots-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .screenshots-slider {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding: 40px 20px;
+            scrollbar-width: thin;
+            scrollbar-color: #11757C #FDB462;
+        }
+
+        .screenshots-slider::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .screenshots-slider::-webkit-scrollbar-track {
+            background: #FDB462;
+            border-radius: 10px;
+        }
+
+        .screenshots-slider::-webkit-scrollbar-thumb {
+            background: #11757C;
+            border-radius: 10px;
+        }
+
+        .screenshot-card {
+            flex: 0 0 320px;
+            scroll-snap-align: center;
+            transition: transform 0.3s;
+        }
+
+        .screenshot-card:hover {
+            transform: scale(1.05);
+        }
+
+        .screenshot-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 30px;
+            box-shadow: 0 15px 50px rgba(17, 117, 124, 0.2);
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 100px 5%;
+            background: linear-gradient(135deg, #11757C 0%, #0d5c61 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta h2 {
+            font-size: 46px;
+            margin-bottom: 24px;
+            font-weight: 700;
+        }
+
+        .cta p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-white {
+            background: white;
+            color: #11757C;
+            padding: 18px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-white:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            padding: 18px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            border: 2px solid white;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: #11757C;
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            background: #11757C;
+            color: #FFF8E3;
+            padding: 60px 5% 30px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #FFF8E3;
+        }
+
+        .footer-logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+        }
+
+        .footer-brand p {
+            color: #FDB462;
+            line-height: 1.6;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #FFF8E3;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: #FDB462;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #FFF8E3;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(253, 180, 98, 0.3);
+            color: #FDB462;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 120px 5% 60px;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 38px;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-image {
+                order: -1;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .cta h2 {
+                font-size: 32px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero-content h1 {
+                font-size: 32px;
+            }
+
+            .hero-content p {
+                font-size: 18px;
+            }
+
+            .btn-primary, .btn-secondary, .btn-white, .btn-outline {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <img src="src/logo.png" alt="Fincaff Logo">
+                <span>Fincaff</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Fitur</a></li>
+                <li><a href="#screenshots">Screenshot</a></li>
+                <li><a href="#download">Download</a></li>
+            </ul>
+            <a href="#download" class="download-btn">Download</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Temukan Kedai Kopi Terdekat</h1>
+            <p>Fincaff membantu Anda menemukan cafe dan kedai kopi terbaik di sekitar Anda. Simpan favorit, buat koleksi, dan jelajahi tempat-tempat baru dengan mudah!</p>
+            <div class="hero-buttons">
+                <a href="#download" class="btn-primary">
+                    <i class="fas fa-download"></i>
+                    Download Sekarang
+                </a>
+                <a href="#features" class="btn-secondary">
+                    <i class="fas fa-sparkles"></i>
+                    Lihat Fitur
+                </a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="src/home.png" alt="Fincaff App" class="phone-mockup">
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="features-container">
+            <h2 class="section-title">Fitur Unggulan</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Temukan Cafe Terdekat</h3>
+                    <p>Cari cafe di sekitar lokasi Anda dengan filter WiFi, parking, pet friendly, dan banyak lagi.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Simpan Favorit</h3>
+                    <p>Buat koleksi cafe favorit Anda seperti "Weekday Work Spots" atau "Brunch with Friends".</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Rating & Review</h3>
+                    <p>Lihat rating dari pengguna lain dan temukan cafe dengan kualitas terbaik di area Anda.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map"></i>
+                    </div>
+                    <h3>Petunjuk Arah</h3>
+                    <p>Integrasi dengan Google Maps untuk mendapatkan rute tercepat menuju cafe pilihan Anda.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <h3>Informasi Lengkap</h3>
+                    <p>Jam operasional, status kepenuhan, fasilitas, kapasitas, dan detail penting lainnya tersedia untuk setiap cafe.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <h3>Bagikan Lokasi</h3>
+                    <p>Bagikan cafe favorit Anda dengan teman dan keluarga langsung dari aplikasi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section id="screenshots" class="screenshots">
+        <div class="screenshots-container">
+            <h2 class="section-title">Lihat Aplikasinya</h2>
+            <div class="screenshots-slider">
+                <div class="screenshot-card">
+                    <img src="src/home.png" alt="Beranda Fincaff">
+                </div>
+                <div class="screenshot-card">
+                    <img src="src/detail.png" alt="Detail Cafe">
+                </div>
+                <div class="screenshot-card">
+                    <img src="src/koleksi.png" alt="Koleksi Tersimpan">
+                </div>
+                <div class="screenshot-card">
+                    <img src="src/home.png" alt="Pencarian Cafe">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="download" class="cta">
+        <div class="cta-container">
+            <h2>Siap Menemukan Cafe Favoritmu?</h2>
+            <p>Download Fincaff sekarang dan mulai jelajahi cafe-cafe terbaik di kotamu. Tersedia untuk iOS dan Android.</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn-white">
+                    <i class="fab fa-apple"></i>
+                    App Store
+                </a>
+                <a href="#" class="btn-outline">
+                    <i class="fab fa-google-play"></i>
+                    Google Play
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <img src="src/logo.png" alt="Fincaff Logo">
+                    <span>Fincaff</span>
+                </div>
+                <p>Aplikasi pencari kedai kopi terbaik di Indonesia. Temukan, simpan, dan kunjungi cafe favoritmu dengan mudah.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Produk</h4>
+                <ul>
+                    <li><a href="#features">Fitur</a></li>
+                    <li><a href="#download">Download</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Harga</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Perusahaan</h4>
+                <ul>
+                    <li><a href="#">Tentang Kami</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Karir</a></li>
+                    <li><a href="#">Press Kit</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Dukungan</h4>
+                <ul>
+                    <li><a href="#">Kontak</a></li>
+                    <li><a href="#">Privasi</a></li>
+                    <li><a href="#">Syarat & Ketentuan</a></li>
+                    <li><a href="#">Bantuan</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Fincaff. Semua hak dilindungi. | Dibuat dengan <i class="fas fa-heart"></i> di Indonesia</p>
+        </div>
+    </footer>
+</body>
+</html>
